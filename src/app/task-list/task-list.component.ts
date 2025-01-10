@@ -3,27 +3,37 @@ import { Task } from '../model/task.model';
 import { TaskService } from '../task.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TaskFormComponent],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
 
 export class TaskListComponent implements OnInit {
 
-  tasks: Task[] = [];  // Define an empty array for tasks
+  tasks: Task[] = [];
+  isModalOpen = false;
 
-  constructor(private taskService: TaskService) { }  // Inject the service
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
-    this.tasks = this.taskService.getTasks();  // Get the tasks when the component is initialized
+    this.tasks = this.taskService.getTasks();
+  }
+
+  openModal():void{
+    this.isModalOpen = true; 
+  }
+  
+  closeModal():void{
+    this.isModalOpen = false; 
   }
 
   deleteTask(id: number): void {
-    this.taskService.deleteTask(id);  // Call the service method to delete the task
-    this.tasks = this.taskService.getTasks();  // Update the task list after deletion
+    this.taskService.deleteTask(id);  
+    this.tasks = this.taskService.getTasks(); 
   }
 }

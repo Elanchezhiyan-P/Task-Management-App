@@ -1,12 +1,15 @@
 <div class="task-list">
-    <h2>Task List</h2>
-    
-    <!-- Display a message if there are no tasks -->
+  <h2>Task List</h2>
+
+  <div>
+    <button class="btn btn-add" (click)="openModal()" style="float:right">Add Task</button>
+  </div>
+
+  <div class="task-list-comp">
     <div *ngIf="tasks.length === 0">
       <p>No tasks available.</p>
     </div>
-  
-    <!-- Display each task -->
+
     <ul>
       <li *ngFor="let task of tasks" class="task-item">
         <div class="task-details">
@@ -14,10 +17,15 @@
           <strong>{{ task.title }}</strong> <br />
           <em>{{ task.description }}</em>
         </div>
-  
-        <!-- Button to delete the task -->
+
         <button (click)="deleteTask(task.id)" class="delete-btn">Delete</button>
       </li>
     </ul>
   </div>
-  
+  <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <app-task-form></app-task-form>
+    </div>
+  </div>
+</div>
